@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.todoapp.data.models.Task
+import com.example.todoapp.data.viewmodel.CompletedTaskViewModel
 import com.example.todoapp.data.viewmodel.TaskViewModel
 import com.example.todoapp.databinding.FragmentTaskDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,7 +19,8 @@ class TaskDetailsFragment : Fragment() {
     private var _binding: FragmentTaskDetailsBinding? = null
     private val binding get() = _binding!!
 
-    private val taskViewModel: TaskViewModel by viewModels() // Asegúrate de tener tu ViewModel
+    private val taskViewModel: TaskViewModel by viewModels()
+    private val completedTaskViewModel: CompletedTaskViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,6 +54,11 @@ class TaskDetailsFragment : Fragment() {
             if (isChecked) {
                 // Si se marca como completada, actualiza el estado en el ViewModel
                 taskViewModel.updateTaskStatus(updatedTask)
+            }
+
+            if (!isChecked) {
+                // Si se marca como completada, actualiza el estado en el ViewModel
+                completedTaskViewModel.updateCompletedTaskStatus(updatedTask.copy(isCompleted = !isChecked))
             }
 
             // Actualiza el estado en la vista

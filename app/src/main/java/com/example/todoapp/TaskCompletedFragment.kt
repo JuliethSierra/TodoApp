@@ -49,6 +49,7 @@ class TaskCompletedFragment : Fragment() {
             },
             onTaskSelected = { task ->
                 val bundle = Bundle().apply {
+                    putInt("taskId", task.id)
                     putString("taskTitle", task.title)
                     putBoolean("isCompleted", task.isCompleted)
                 }
@@ -77,7 +78,7 @@ class TaskCompletedFragment : Fragment() {
         lifecycleScope.launch {
             completedTaskViewModel.uiState.collect { uiState ->
                 uiState.completedTasks?.let { listCompletedTasks ->
-                    rvCompletedTaskAdapter.setCompletedTasks(listCompletedTasks) // Usar el método setTasks
+                    rvCompletedTaskAdapter.setCompletedTasks(listCompletedTasks)
                 }
                 binding.taskRecyclerView.visibility = if (uiState.isLoading) View.INVISIBLE else View.VISIBLE
                 binding.pbTasks.visibility = if (uiState.isLoading) View.VISIBLE else View.GONE

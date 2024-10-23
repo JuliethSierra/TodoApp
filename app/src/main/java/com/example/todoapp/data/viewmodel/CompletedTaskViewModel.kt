@@ -35,7 +35,6 @@ class CompletedTaskViewModel @Inject constructor(
     fun updateCompletedTaskStatus(task: Task) {
         repository.updateStatusTask(task)
         repository.addNoCompletedTask(task)
-        repository.deleteNoCompletedTask(task)// Actualizar la tarea en el repositorio
-    // Volver a cargar las tareas para actualizar el estado en la UI
+        repository.deleteNoCompletedTask(task)
     }
 }
