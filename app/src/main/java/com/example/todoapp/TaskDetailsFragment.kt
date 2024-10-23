@@ -36,18 +36,14 @@ class TaskDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Obtener los argumentos pasados
         val taskTitle = args.taskTitle
         val isCompleted = args.isCompleted
 
-        // Configurar la vista
         binding.taskDetailsTitle.text = taskTitle
         binding.taskDetailsCheckbox.isChecked = isCompleted
         binding.taskDetailsStatus.text = if (isCompleted) "Completada" else "No Completada"
 
-        // Configurar el listener del CheckBox
         binding.taskDetailsCheckbox.setOnCheckedChangeListener { _, isChecked ->
-            // Crear una nueva tarea con el estado actualizado
             val updatedTask = Task(
                 id = args.taskId,
                 title = taskTitle,
@@ -55,16 +51,13 @@ class TaskDetailsFragment : Fragment() {
             )
 
             if (isChecked) {
-                // Si se marca como completada, actualiza el estado en el ViewModel
                 taskViewModel.updateTaskStatus(updatedTask)
             }
 
             if (!isChecked) {
-                // Si se marca como completada, actualiza el estado en el ViewModel
                 completedTaskViewModel.updateCompletedTaskStatus(updatedTask.copy(isCompleted = !isChecked))
             }
 
-            // Actualiza el estado en la vista
             binding.taskDetailsStatus.text = if (isChecked) "Completada" else "No Completada"
         }
 
