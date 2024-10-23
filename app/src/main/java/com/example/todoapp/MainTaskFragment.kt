@@ -44,6 +44,7 @@ class MainTaskFragment : Fragment() {
             },
             onTaskSelected = { task ->
                 val bundle = Bundle().apply {
+                    putInt("taskId", task.id)
                     putString("taskTitle", task.title)
                     putBoolean("isCompleted", task.isCompleted)
                 }
