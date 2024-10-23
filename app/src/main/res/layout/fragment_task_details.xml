@@ -30,7 +30,7 @@
                 android:id="@+id/taskDetailsTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Task Title"
+                android:text="@string/detail_task_title"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
@@ -41,7 +41,7 @@
             android:id="@+id/taskDetailsStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="No Completada"
+            android:text="@string/is_completed_task"
             app:layout_constraintTop_toBottomOf="@id/taskDetails"
             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -60,7 +60,7 @@
                 android:id="@+id/viewCompletedTasksButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Volver"
+                android:text="@string/back_button"
                 android:textSize="18sp"
                 android:backgroundTint="@color/purple_200"
                 android:textColor="@android:color/white" />

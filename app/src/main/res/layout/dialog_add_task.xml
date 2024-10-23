@@ -9,7 +9,7 @@
         android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Agrega una tarea!"
+        android:text="@string/add_task_title"
         android:textSize="18sp"
         android:layout_marginBottom="8dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,7 +20,7 @@
         android:id="@+id/editTaskTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Escribe aquí el título"
+        android:hint="@string/add_task_text"
         app:layout_constraintTop_toBottomOf="@id/textViewTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +40,7 @@
             android:id="@+id/buttonCancelTask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancelar"
+            android:text="@string/button_cancel"
             android:textColor="@android:color/white"
 
             android:layout_marginEnd="8dp" />
@@ -49,7 +49,7 @@
             android:id="@+id/buttonAddTask"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Agregar"
+            android:text="@string/add_task_button"
             android:textColor="@android:color/white"
             android:backgroundTint="@color/purple_200" />
     </LinearLayout>

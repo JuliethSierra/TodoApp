@@ -31,16 +31,8 @@ class TaskViewModel @Inject constructor(
             isLoading = false)
     }
 
-
-    // Método para agregar una tarea
     fun addTask(title: String) {
         repository.addTask(title)
-        loadTasks()
-    }
-
-    // Método para actualizar una tarea
-    fun updateTask(task: Task) {
-        repository.updateTask(task)
         loadTasks()
     }
 
@@ -49,6 +41,5 @@ class TaskViewModel @Inject constructor(
         repository.addCompletedTask(task)
         repository.completedTask(task)
     }
-
 
 }

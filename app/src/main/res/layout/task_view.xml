@@ -25,28 +25,28 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/task_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1"
+                android:layout_marginBottom="4dp"
+                android:text="@string/task_id"
                 android:textColor="@color/black"
-                android:textStyle="bold"
                 android:textSize="18sp"
-                android:layout_marginBottom="4dp" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/task_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Título de la Card"
+                android:layout_marginBottom="4dp"
+                android:text="@string/detail_task_title"
                 android:textColor="@color/black"
-                android:textStyle="bold"
                 android:textSize="18sp"
-                android:layout_marginBottom="4dp" />
+                android:textStyle="bold" />
 
         </LinearLayout>
     </LinearLayout>

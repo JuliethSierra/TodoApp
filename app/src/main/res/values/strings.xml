@@ -1,5 +1,19 @@
 <resources>
     <string name="app_name">TodoApp</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="main_title">Todo App</string>
+    <string name="add_task_title">Agrega una tarea!</string>
+    <string name="add_task_text">Escribe aquí el título</string>
+    <string name="button_cancel">Cancelar</string>
+    <string name="add_task_button">Agregar</string>
+    <string name="my_task">Mis Tareas Pendientes</string>
+    <string name="view_completed_task_button">Ver tareas completadas</string>
+    <string name="completed_task_title">Tareas Completadas</string>
+    <string name="view_my_task_button">Ver Mis Tareas</string>
+    <string name="detail_task_title">Task Title</string>
+    <string name="is_completed_task">No Completada</string>
+    <string name="back_button">Volver</string>
+    <string name="task_id">ID: 1</string>
+    <string name="add_task">Agrega una tarea!</string>
+
 </resources>

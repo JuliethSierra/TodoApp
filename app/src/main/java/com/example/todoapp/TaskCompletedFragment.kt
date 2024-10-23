@@ -45,6 +45,7 @@ class TaskCompletedFragment : Fragment() {
             onTaskCheckedChange = { task, isChecked ->
                 if (!isChecked) {
                     completedTaskViewModel.updateCompletedTaskStatus(task.copy(isCompleted = !isChecked))
+                    initUiStateLifecycle()
                 }
             },
             onTaskSelected = { task ->
@@ -56,7 +57,6 @@ class TaskCompletedFragment : Fragment() {
                 findNavController().navigate(R.id.action_taskCompletedFragment_to_taskDetailsFragment, bundle)
             }
         )
-        // Configurar el RecyclerView
         setupRecyclerView()
 
         initUiStateLifecycle()

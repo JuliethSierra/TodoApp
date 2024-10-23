@@ -41,6 +41,7 @@ class MainTaskFragment : Fragment() {
         rvTaskAdapter = RVTaskAdapter(
             onTaskCheckedChange = { task, isChecked ->
                 taskViewModel.updateTaskStatus(task.copy(isCompleted = isChecked))
+                initUiStateLifecycle()
             },
             onTaskSelected = { task ->
                 val bundle = Bundle().apply {
@@ -52,12 +53,10 @@ class MainTaskFragment : Fragment() {
             }
         )
 
-        // Configurar el RecyclerView
         setupRecyclerView()
 
         initUiStateLifecycle()
 
-        // Configurar el FAB para mostrar el diálogo
         binding.fabAddTask.setOnClickListener {
             showAddTaskDialog()
         }
@@ -80,7 +79,7 @@ class MainTaskFragment : Fragment() {
         lifecycleScope.launch {
             taskViewModel.uiState.collect { uiState ->
                 uiState.tasks?.let { listTasks ->
-                    rvTaskAdapter.setTasks(listTasks) // Usar el método setTasks
+                    rvTaskAdapter.setTasks(listTasks)
                 }
                 binding.taskRecyclerView.visibility = if (uiState.isLoading) View.INVISIBLE else View.VISIBLE
                 binding.pbTasks.visibility = if (uiState.isLoading) View.VISIBLE else View.GONE
@@ -88,7 +87,6 @@ class MainTaskFragment : Fragment() {
         }
     }
 
-    // Método para mostrar el diálogo usando View Binding
     private fun showAddTaskDialog() {
         val dialogBinding = DialogAddTaskBinding.inflate(LayoutInflater.from(requireContext()))
         val dialog = AlertDialog.Builder(requireContext())
@@ -96,26 +94,20 @@ class MainTaskFragment : Fragment() {
             .setCancelable(true)
             .create()
 
-        // Listener para el botón "Agregar"
         dialogBinding.buttonAddTask.setOnClickListener {
             val taskTitle = dialogBinding.editTaskTitle.text.toString().trim()
 
             if (taskTitle.isNotEmpty()) {
                  taskViewModel.addTask(taskTitle)
-                initUiStateLifecycle()// Agregar la tarea
+                initUiStateLifecycle()
                 dialog.dismiss()
             } else {
                 requireContext().showToast("Por favor ingresa un titulo")
             }
         }
-
-        // Listener para el botón "Cancelar"
         dialogBinding.buttonCancelTask.setOnClickListener {
             dialog.dismiss()  // Cierra el diálogo
         }
-
         dialog.show()
     }
-
-
 }

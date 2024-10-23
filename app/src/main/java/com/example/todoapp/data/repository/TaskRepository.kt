@@ -16,7 +16,6 @@ class TaskRepository @Inject constructor() {
                 Task(
                     id = taskIdCounter++,
                     title = "Tarea $index",
-                    //description = "Descripción de la tarea $index",
                     isCompleted = false
                 )
             )
@@ -24,10 +23,6 @@ class TaskRepository @Inject constructor() {
     }
 
     fun getAllTasks(): List<Task> = taskList
-
-    //fun getCompletedTasks(): List<Task> = taskList.filter { it.isCompleted }
-
-    fun getTaskById(id: Int): Task? = taskList.find { it.id == id }
 
     fun addTask(title: String) {
         val task = Task(id = taskIdCounter++, title)
@@ -43,7 +38,6 @@ class TaskRepository @Inject constructor() {
             it.isCompleted = updatedTask.isCompleted // Actualizar el estado
         }
     }
-
 
     fun completedTask(completedTask: Task){
         taskList.remove(completedTask)

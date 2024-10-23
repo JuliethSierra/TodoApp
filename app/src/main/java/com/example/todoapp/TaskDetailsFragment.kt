@@ -65,9 +65,8 @@ class TaskDetailsFragment : Fragment() {
             binding.taskDetailsStatus.text = if (isChecked) "Completada" else "No Completada"
         }
 
-        // Configurar el listener del botón
         binding.viewCompletedTasksButton.setOnClickListener {
-            findNavController().navigateUp() // Vuelve al fragmento anterior
+            findNavController().navigateUp()
         }
     }
 
