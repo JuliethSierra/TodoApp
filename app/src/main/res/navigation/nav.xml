@@ -40,5 +40,15 @@
         <action
             android:id="@+id/action_taskDetailsFragment_to_mainTaskFragment"
             app:destination="@id/mainTaskFragment" />
+        <argument
+            android:name="task_id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="task_title"
+            app:argType="string" />
+        <argument
+            android:name="is_completed"
+            app:argType="boolean" />
     </fragment>
 </navigation>

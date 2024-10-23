@@ -49,12 +49,13 @@ class TaskCompletedFragment : Fragment() {
                 }
             },
             onTaskSelected = { task ->
-                val bundle = Bundle().apply {
-                    putInt("taskId", task.id)
-                    putString("taskTitle", task.title)
-                    putBoolean("isCompleted", task.isCompleted)
-                }
-                findNavController().navigate(R.id.action_taskCompletedFragment_to_taskDetailsFragment, bundle)
+
+                val action = TaskCompletedFragmentDirections.actionTaskCompletedFragmentToTaskDetailsFragment(
+                    taskId = task.id,
+                    taskTitle = task.title,
+                    isCompleted = task.isCompleted
+                )
+                findNavController().navigate(action)
             }
         )
         setupRecyclerView()

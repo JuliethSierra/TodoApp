@@ -46,12 +46,13 @@ class MainTaskFragment : Fragment() {
                 }
             },
             onTaskSelected = { task ->
-                val bundle = Bundle().apply {
-                    putInt("taskId", task.id)
-                    putString("taskTitle", task.title)
-                    putBoolean("isCompleted", task.isCompleted)
-                }
-                findNavController().navigate(R.id.action_mainTaskFragment_to_taskDetailsFragment, bundle)
+
+                val action = MainTaskFragmentDirections.actionMainTaskFragmentToTaskDetailsFragment(
+                    taskId = task.id,
+                    taskTitle = task.title,
+                    isCompleted = task.isCompleted
+                )
+                findNavController().navigate(action)
             }
         )
 

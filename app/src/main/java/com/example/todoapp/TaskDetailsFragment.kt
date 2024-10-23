@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.todoapp.data.models.Task
 import com.example.todoapp.data.viewmodel.CompletedTaskViewModel
 import com.example.todoapp.data.viewmodel.TaskViewModel
@@ -22,6 +23,8 @@ class TaskDetailsFragment : Fragment() {
     private val taskViewModel: TaskViewModel by viewModels()
     private val completedTaskViewModel: CompletedTaskViewModel by viewModels()
 
+    private val args: TaskDetailsFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,8 +37,8 @@ class TaskDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Obtener los argumentos pasados
-        val taskTitle = arguments?.getString("taskTitle") ?: "Título no disponible"
-        val isCompleted = arguments?.getBoolean("isCompleted") ?: false
+        val taskTitle = args.taskTitle
+        val isCompleted = args.isCompleted
 
         // Configurar la vista
         binding.taskDetailsTitle.text = taskTitle
@@ -46,9 +49,9 @@ class TaskDetailsFragment : Fragment() {
         binding.taskDetailsCheckbox.setOnCheckedChangeListener { _, isChecked ->
             // Crear una nueva tarea con el estado actualizado
             val updatedTask = Task(
-                id = arguments?.getInt("taskId") ?: 0, // Asegúrate de pasar el ID de la tarea
+                id = args.taskId,
                 title = taskTitle,
-                isCompleted = isChecked
+                isCompleted = isCompleted
             )
 
             if (isChecked) {
@@ -66,7 +69,7 @@ class TaskDetailsFragment : Fragment() {
         }
 
         binding.viewCompletedTasksButton.setOnClickListener {
-            findNavController().navigateUp()
+            findNavController().popBackStack()
         }
     }
 
