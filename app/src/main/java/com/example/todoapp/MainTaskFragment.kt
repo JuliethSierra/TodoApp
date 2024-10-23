@@ -40,8 +40,10 @@ class MainTaskFragment : Fragment() {
 
         rvTaskAdapter = RVTaskAdapter(
             onTaskCheckedChange = { task, isChecked ->
-                taskViewModel.updateTaskStatus(task.copy(isCompleted = isChecked))
-                initUiStateLifecycle()
+                if (isChecked) {
+                    taskViewModel.updateTaskStatus(task.copy(isCompleted = isChecked))
+                    initUiStateLifecycle()
+                }
             },
             onTaskSelected = { task ->
                 val bundle = Bundle().apply {
@@ -106,7 +108,7 @@ class MainTaskFragment : Fragment() {
             }
         }
         dialogBinding.buttonCancelTask.setOnClickListener {
-            dialog.dismiss()  // Cierra el diálogo
+            dialog.dismiss()
         }
         dialog.show()
     }

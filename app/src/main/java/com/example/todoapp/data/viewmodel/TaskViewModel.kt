@@ -38,6 +38,7 @@ class TaskViewModel @Inject constructor(
 
     fun updateTaskStatus(task: Task) {
         repository.updateStatusTask(task)
+        loadTasks()
         repository.addCompletedTask(task)
         repository.completedTask(task)
     }
