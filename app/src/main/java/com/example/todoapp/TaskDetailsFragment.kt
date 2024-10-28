@@ -51,11 +51,11 @@ class TaskDetailsFragment : Fragment() {
             )
 
             if (isChecked) {
-                taskViewModel.updateTaskStatus(updatedTask)
+                //taskViewModel.updateTaskStatus(updatedTask)
             }
 
             if (!isChecked) {
-                completedTaskViewModel.updateCompletedTaskStatus(updatedTask.copy(isCompleted = !isChecked))
+                //completedTaskViewModel.updateCompletedTaskStatus(updatedTask.copy(isCompleted = !isChecked))
             }
 
             binding.taskDetailsStatus.text = if (isChecked) "Completada" else "No Completada"

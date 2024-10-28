@@ -1,6 +1,28 @@
 package com.example.todoapp.data.repository
 
+import com.example.todoapp.data.local.TaskDao
+import com.example.todoapp.data.mapper.toTask
+import com.example.todoapp.data.mapper.toTaskEntity
 import com.example.todoapp.data.models.Task
+import javax.inject.Inject
+
+class TaskRepository @Inject constructor(private val taskDao: TaskDao) {
+
+
+    suspend fun getAllTasks(): List<Task> {
+        return taskDao.getAllTasks().map { it.toTask() }
+    }
+
+    suspend fun insertTask(task: Task) {
+        taskDao.insertTask(task.toTaskEntity())
+    }
+
+/*    suspend fun deleteTask(taskId: Int) {
+        taskDao.deleteTask(taskId)
+    }*/
+}
+
+/*import com.example.todoapp.data.models.Task
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -59,4 +81,4 @@ class TaskRepository @Inject constructor() {
     fun getCompletedListTasks(): List<Task> {
         return completedTasks
     }
-}
+}*/

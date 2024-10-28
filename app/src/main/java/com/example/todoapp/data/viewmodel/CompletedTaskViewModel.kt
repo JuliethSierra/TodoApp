@@ -17,7 +17,7 @@ class CompletedTaskViewModel @Inject constructor(
     private val repository: TaskRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(CompletedTaskUIState())
+/*    private val _uiState = MutableStateFlow(CompletedTaskUIState())
     val uiState: StateFlow<CompletedTaskUIState> = _uiState.asStateFlow()
 
 
@@ -36,5 +36,5 @@ class CompletedTaskViewModel @Inject constructor(
         repository.updateStatusTask(task)
         repository.addNoCompletedTask(task)
         repository.deleteNoCompletedTask(task)
-    }
+    }*/
 }

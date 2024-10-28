@@ -44,7 +44,7 @@ class TaskCompletedFragment : Fragment() {
         rvCompletedTaskAdapter = RVCompletedTaskAdapter(
             onTaskCheckedChange = { task, isChecked ->
                 if (!isChecked) {
-                    completedTaskViewModel.updateCompletedTaskStatus(task.copy(isCompleted = !isChecked))
+                    //completedTaskViewModel.updateCompletedTaskStatus(task.copy(isCompleted = !isChecked))
                     initUiStateLifecycle()
                 }
             },
@@ -77,13 +77,13 @@ class TaskCompletedFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun initUiStateLifecycle() {
         lifecycleScope.launch {
-            completedTaskViewModel.uiState.collect { uiState ->
+            /*completedTaskViewModel.uiState.collect { uiState ->
                 uiState.completedTasks?.let { listCompletedTasks ->
                     rvCompletedTaskAdapter.setCompletedTasks(listCompletedTasks)
                 }
                 binding.taskRecyclerView.visibility = if (uiState.isLoading) View.INVISIBLE else View.VISIBLE
                 binding.pbTasks.visibility = if (uiState.isLoading) View.VISIBLE else View.GONE
-            }
+            }*/
         }
     }
 

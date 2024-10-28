@@ -2,6 +2,7 @@ package com.example.todoapp.data.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.todoapp.data.models.Task
 import com.example.todoapp.data.repository.TaskRepository
 import com.example.todoapp.ui.screens.tasks.uistate.TaskUIState
@@ -9,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,13 +27,15 @@ class TaskViewModel @Inject constructor(
     }
 
     private fun loadTasks() {
-        val tasks: List<Task> = repository.getAllTasks()
-        Log.d("AndroidRuntime", tasks.toString())
-        _uiState.value = _uiState.value.copy(tasks = tasks,
-            isLoading = false)
+        viewModelScope.launch {
+            val tasks: List<Task> = repository.getAllTasks()
+            Log.d("AndroidRuntime", tasks.toString())
+            _uiState.value = _uiState.value.copy(tasks = tasks,
+                isLoading = false)
+        }
     }
 
-    fun addTask(title: String) {
+ /*   fun addTask(title: String) {
         repository.addTask(title)
         loadTasks()
     }
@@ -41,6 +45,6 @@ class TaskViewModel @Inject constructor(
         loadTasks()
         repository.addCompletedTask(task)
         repository.completedTask(task)
-    }
+    }*/
 
 }

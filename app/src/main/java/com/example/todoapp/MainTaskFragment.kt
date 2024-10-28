@@ -41,7 +41,7 @@ class MainTaskFragment : Fragment() {
         rvTaskAdapter = RVTaskAdapter(
             onTaskCheckedChange = { task, isChecked ->
                 if (isChecked) {
-                    taskViewModel.updateTaskStatus(task.copy(isCompleted = isChecked))
+                    //taskViewModel.updateTaskStatus(task.copy(isCompleted = isChecked))
                     initUiStateLifecycle()
                 }
             },
@@ -101,7 +101,7 @@ class MainTaskFragment : Fragment() {
             val taskTitle = dialogBinding.editTaskTitle.text.toString().trim()
 
             if (taskTitle.isNotEmpty()) {
-                 taskViewModel.addTask(taskTitle)
+                 //taskViewModel.addTask(taskTitle)
                 initUiStateLifecycle()
                 dialog.dismiss()
             } else {
