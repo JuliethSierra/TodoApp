@@ -11,14 +11,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.todoapp.data.viewmodel.CompletedTaskViewModel
 import com.example.todoapp.data.viewmodel.TaskViewModel
-import com.example.todoapp.databinding.DialogAddTaskBinding
-import com.example.todoapp.databinding.FragmentMainTaskBinding
 import com.example.todoapp.databinding.FragmentTaskCompletedBinding
 import com.example.todoapp.ui.screens.completedtasks.rv.RVCompletedTaskAdapter
-import com.example.todoapp.ui.screens.tasks.rv.RVTaskAdapter
-import com.example.todoapp.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -79,7 +74,7 @@ class TaskCompletedFragment : Fragment() {
 
     private fun loadCompletedTasks() {
         lifecycleScope.launch {
-            taskViewModel.loadCompletedTasks() // Llama al método en el ViewModel para cargar las tareas completadas
+            taskViewModel.loadCompletedTasks()
         }
     }
 

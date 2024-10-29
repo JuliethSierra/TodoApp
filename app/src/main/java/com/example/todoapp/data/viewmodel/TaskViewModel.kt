@@ -26,7 +26,6 @@ class TaskViewModel @Inject constructor(
         viewModelScope.launch {
             val tasks: List<Task> = repository.getAllTasks()
             Log.d("AndroidRuntime", "Tareas: $tasks")
-            // Filtrar solo las tareas pendientes
             val pendingTasks = tasks.filter { !it.isCompleted }
             Log.d("AndroidRuntime", "Tareas pendientes: $pendingTasks")
             _uiState.value = _uiState.value.copy(
@@ -40,7 +39,6 @@ class TaskViewModel @Inject constructor(
         viewModelScope.launch {
             val tasks: List<Task> = repository.getCompletedTasks()
             Log.d("AndroidRuntime", "Tareas Completadas: $tasks")
-            // No es necesario filtrar, ya que solo se obtienen las tareas completadas
             _uiState.value = _uiState.value.copy(
                 tasks = tasks,
                 isLoading = false
@@ -51,7 +49,7 @@ class TaskViewModel @Inject constructor(
     fun addTask(title: String) {
         viewModelScope.launch {
             repository.addTask(title)
-            loadTasks() // Recargar tareas pendientes después de agregar
+            loadTasks()
         }
     }
 

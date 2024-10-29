@@ -109,7 +109,6 @@ class MainTaskFragment : Fragment() {
 
             if (taskTitle.isNotEmpty()) {
                 taskViewModel.addTask(taskTitle)
-                initUiStateLifecycle()
                 dialog.dismiss()
             } else {
                 requireContext().showToast("Por favor ingresa un titulo")
