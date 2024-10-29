@@ -1,7 +1,5 @@
 package com.example.todoapp
 
-import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater

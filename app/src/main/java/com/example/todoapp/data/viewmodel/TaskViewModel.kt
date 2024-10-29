@@ -70,7 +70,7 @@ class TaskViewModel @Inject constructor(
     fun updateTaskStatus(task: Task) {
         viewModelScope.launch {
             repository.updateStatusTask(task.id, task.isCompleted) // Cambiar el estado de la tarea
-            //loadTasks() // Recargar tareas pendientes después de actualizar
+            loadTasks() // Recargar tareas pendientes después de actualizar
         }
     }
 
