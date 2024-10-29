@@ -63,14 +63,13 @@ dependencies {
 
     // Room
     implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
 
     implementation(libs.kotlinx.coroutines.android)
-    kapt("androidx.room:room-compiler:2.5.2")
 
  // Asegúrate de que la versión esté actualizada
-    implementation("androidx.room:room-ktx:2.5.0") // Añade esta línea
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0") // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0") // Coroutines para Android
+    implementation(libs.androidx.room.ktx) // Añade esta línea
+    implementation(libs.kotlinx.coroutines.core) // Coroutines
 }
 
 kapt {

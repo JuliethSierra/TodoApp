@@ -22,29 +22,65 @@ class TaskViewModel @Inject constructor(
     val uiState: StateFlow<TaskUIState> = _uiState.asStateFlow()
 
 
-    init {
-        loadTasks()
-    }
-
-    private fun loadTasks() {
+    fun loadTasks() {
         viewModelScope.launch {
             val tasks: List<Task> = repository.getAllTasks()
-            Log.d("AndroidRuntime", tasks.toString())
-            _uiState.value = _uiState.value.copy(tasks = tasks,
-                isLoading = false)
+            Log.d("AndroidRuntime", "Tareas: $tasks")
+            // Filtrar solo las tareas pendientes
+            val pendingTasks = tasks.filter { !it.isCompleted }
+            Log.d("AndroidRuntime", "Tareas pendientes: $pendingTasks")
+            _uiState.value = _uiState.value.copy(
+                tasks = pendingTasks,
+                isLoading = false
+            )
         }
     }
 
- /*   fun addTask(title: String) {
-        repository.addTask(title)
-        loadTasks()
+    fun loadCompletedTasks() {
+        viewModelScope.launch {
+            val tasks: List<Task> = repository.getCompletedTasks()
+            Log.d("AndroidRuntime", "Tareas Completadas: $tasks")
+            // No es necesario filtrar, ya que solo se obtienen las tareas completadas
+            _uiState.value = _uiState.value.copy(
+                tasks = tasks,
+                isLoading = false
+            )
+        }
+    }
+
+    fun addTask(title: String) {
+        viewModelScope.launch {
+            repository.addTask(title)
+            loadTasks() // Recargar tareas pendientes después de agregar
+        }
+    }
+
+    fun deleteTask(task: Task) {
+        viewModelScope.launch {
+            repository.deleteTask(task.id)
+            loadTasks()
+        }
+    }
+
+    fun deleteTaskCompleted(task: Task) {
+        viewModelScope.launch {
+            repository.deleteTask(task.id)
+            loadCompletedTasks()
+        }
     }
 
     fun updateTaskStatus(task: Task) {
-        repository.updateStatusTask(task)
-        loadTasks()
-        repository.addCompletedTask(task)
-        repository.completedTask(task)
-    }*/
+        viewModelScope.launch {
+            repository.updateStatusTask(task.id, task.isCompleted) // Cambiar el estado de la tarea
+            //loadTasks() // Recargar tareas pendientes después de actualizar
+        }
+    }
+
+    fun updateTaskStatusPending(task: Task) {
+        viewModelScope.launch {
+            repository.updateStatusTask(task.id, task.isCompleted) // Cambiar el estado de la tarea
+            loadCompletedTasks() // Recargar tareas pendientes después de actualizar
+        }
+    }
 
 }

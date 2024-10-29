@@ -40,10 +40,8 @@ class MainTaskFragment : Fragment() {
 
         rvTaskAdapter = RVTaskAdapter(
             onTaskCheckedChange = { task, isChecked ->
-                if (isChecked) {
-                    //taskViewModel.updateTaskStatus(task.copy(isCompleted = isChecked))
-                    initUiStateLifecycle()
-                }
+                    taskViewModel.updateTaskStatus(task.copy(isCompleted = true))
+                    loadTasks()
             },
             onTaskSelected = { task ->
 
@@ -53,11 +51,14 @@ class MainTaskFragment : Fragment() {
                     isCompleted = task.isCompleted
                 )
                 findNavController().navigate(action)
+            },
+            onTaskDeleted = { task ->
+                taskViewModel.deleteTask(task)
             }
         )
 
         setupRecyclerView()
-
+        loadTasks()
         initUiStateLifecycle()
 
         binding.fabAddTask.setOnClickListener {
@@ -74,6 +75,12 @@ class MainTaskFragment : Fragment() {
         binding.taskRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = rvTaskAdapter
+        }
+    }
+
+    private fun loadTasks() {
+        lifecycleScope.launch {
+            taskViewModel.loadTasks() // Llama al método en el ViewModel para cargar las tareas completadas
         }
     }
 
@@ -101,7 +108,7 @@ class MainTaskFragment : Fragment() {
             val taskTitle = dialogBinding.editTaskTitle.text.toString().trim()
 
             if (taskTitle.isNotEmpty()) {
-                 //taskViewModel.addTask(taskTitle)
+                taskViewModel.addTask(taskTitle)
                 initUiStateLifecycle()
                 dialog.dismiss()
             } else {

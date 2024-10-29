@@ -47,7 +47,19 @@
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold" />
-
         </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/delete_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/delete_task"
+            android:contentDescription="borrar"
+            android:background="?attr/selectableItemBackground"
+            android:padding="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" />
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

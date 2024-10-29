@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todoapp.data.models.Task
 import com.example.todoapp.databinding.TaskViewBinding
 
-class RVTaskAdapter(private val onTaskCheckedChange: (Task, Boolean) -> Unit, private val onTaskSelected: (Task) -> Unit ) : RecyclerView.Adapter<TaskViewHolder>() {
+class RVTaskAdapter(private val onTaskCheckedChange: (Task, Boolean) -> Unit, private val onTaskSelected: (Task) -> Unit, private val onTaskDeleted: (Task) -> Unit ) : RecyclerView.Adapter<TaskViewHolder>() {
 
     private var taskList = emptyList<Task>()
 
@@ -23,7 +23,7 @@ class RVTaskAdapter(private val onTaskCheckedChange: (Task, Boolean) -> Unit, pr
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.bind(taskList[position], onTaskCheckedChange, onTaskSelected)
+        holder.bind(taskList[position], onTaskCheckedChange, onTaskSelected, onTaskDeleted)
     }
 
     override fun getItemCount() = taskList.size

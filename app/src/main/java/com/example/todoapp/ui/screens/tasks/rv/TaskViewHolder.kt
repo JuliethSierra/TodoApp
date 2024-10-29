@@ -8,11 +8,13 @@ class TaskViewHolder (
     private val binding: TaskViewBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(task: Task, onTaskStatusChanged: (Task, Boolean) -> Unit, onTaskSelected: (Task) -> Unit) {
+    fun bind(task: Task, onTaskStatusChanged: (Task, Boolean) -> Unit, onTaskSelected: (Task) -> Unit, onTaskDeleted: (Task) -> Unit) {
         binding.taskId.text = "ID: ${task.id}"
         binding.taskTitle.text = task.title
 
         binding.taskCheckbox.isChecked = task.isCompleted
+
+        binding.taskCheckbox.setOnCheckedChangeListener(null)
 
         binding.taskCheckbox.setOnCheckedChangeListener { _, isChecked ->
             onTaskStatusChanged(task.copy(isCompleted = isChecked), isChecked)
@@ -22,5 +24,8 @@ class TaskViewHolder (
             onTaskSelected(task)
         }
 
+        binding.deleteButton.setOnClickListener {
+            onTaskDeleted(task)
+        }
     }
 }
