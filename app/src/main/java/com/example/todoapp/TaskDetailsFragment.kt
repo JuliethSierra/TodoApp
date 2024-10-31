@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.todoapp.data.models.Task
-import com.example.todoapp.data.viewmodel.CompletedTaskViewModel
 import com.example.todoapp.data.viewmodel.TaskViewModel
 import com.example.todoapp.databinding.FragmentTaskDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint

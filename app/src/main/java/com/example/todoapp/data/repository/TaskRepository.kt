@@ -13,11 +13,7 @@ class TaskRepository @Inject constructor(private val taskDao: TaskDao) {
     }
 
     suspend fun getCompletedTasks(): List<Task> {
-        return taskDao.getTasksByCompletionStatus().map { it.toTask() } // Asegúrate de que esta consulta esté implementada en tu DAO
-    }
-
-    suspend fun insertTask(task: Task) {
-        taskDao.insertTask(task.toTaskEntity())
+        return taskDao.getTasksByCompletionStatus().map { it.toTask() }
     }
 
     suspend fun addTask(title: String) {
@@ -34,8 +30,5 @@ class TaskRepository @Inject constructor(private val taskDao: TaskDao) {
         taskDao.updateTaskStatus(taskId, isCompleted)
     }
 
-    /*    suspend fun deleteTask(taskId: Int) {
-            taskDao.deleteTask(taskId)
-        }*/
 }
 
