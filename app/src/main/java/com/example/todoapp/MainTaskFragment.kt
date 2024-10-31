@@ -80,7 +80,7 @@ class MainTaskFragment : Fragment() {
 
     private fun loadTasks() {
         lifecycleScope.launch {
-            taskViewModel.loadTasks() // Llama al método en el ViewModel para cargar las tareas completadas
+            taskViewModel.loadTasks()
         }
     }
 

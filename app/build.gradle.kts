@@ -61,15 +61,14 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     kapt(libs.hilt.android.compiler)
 
-    // Room
+ 
     implementation(libs.androidx.room.runtime)
     kapt(libs.androidx.room.compiler)
 
     implementation(libs.kotlinx.coroutines.android)
 
- // Asegúrate de que la versión esté actualizada
-    implementation(libs.androidx.room.ktx) // Añade esta línea
-    implementation(libs.kotlinx.coroutines.core) // Coroutines
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.kotlinx.coroutines.core)
 }
 
 kapt {
