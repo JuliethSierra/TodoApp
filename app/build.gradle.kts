@@ -61,6 +61,14 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     kapt(libs.hilt.android.compiler)
 
+ 
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+
+    implementation(libs.kotlinx.coroutines.android)
+
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.kotlinx.coroutines.core)
 }
 
 kapt {

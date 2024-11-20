@@ -7,7 +7,7 @@ import com.example.todoapp.data.models.Task
 import com.example.todoapp.databinding.TaskViewBinding
 
 
-class RVCompletedTaskAdapter(private val onTaskCheckedChange: (Task, Boolean) -> Unit, private val onTaskSelected: (Task) -> Unit ) : RecyclerView.Adapter<CompletedTaskViewHolder>() {
+class RVCompletedTaskAdapter(private val onTaskCheckedChange: (Task, Boolean) -> Unit, private val onTaskSelected: (Task) -> Unit, private val onTaskDeleted: (Task) -> Unit ) : RecyclerView.Adapter<CompletedTaskViewHolder>() {
 
     private var completedTaskList = emptyList<Task>()
 
@@ -24,7 +24,7 @@ class RVCompletedTaskAdapter(private val onTaskCheckedChange: (Task, Boolean) ->
     }
 
     override fun onBindViewHolder(holder: CompletedTaskViewHolder, position: Int) {
-        holder.bind(completedTaskList[position], onTaskCheckedChange, onTaskSelected)
+        holder.bind(completedTaskList[position], onTaskCheckedChange, onTaskSelected, onTaskDeleted)
     }
 
     override fun getItemCount() = completedTaskList.size

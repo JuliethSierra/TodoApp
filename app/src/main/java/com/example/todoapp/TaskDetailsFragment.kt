@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.todoapp.data.models.Task
-import com.example.todoapp.data.viewmodel.CompletedTaskViewModel
 import com.example.todoapp.data.viewmodel.TaskViewModel
 import com.example.todoapp.databinding.FragmentTaskDetailsBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,7 +20,6 @@ class TaskDetailsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val taskViewModel: TaskViewModel by viewModels()
-    private val completedTaskViewModel: CompletedTaskViewModel by viewModels()
 
     private val args: TaskDetailsFragmentArgs by navArgs()
 
@@ -36,30 +34,46 @@ class TaskDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val taskId = args.taskId
         val taskTitle = args.taskTitle
         val isCompleted = args.isCompleted
 
+        binding.taskId.text = "ID: ${taskId}"
         binding.taskDetailsTitle.text = taskTitle
         binding.taskDetailsCheckbox.isChecked = isCompleted
         binding.taskDetailsStatus.text = if (isCompleted) "Completada" else "No Completada"
 
         binding.taskDetailsCheckbox.setOnCheckedChangeListener { _, isChecked ->
             val updatedTask = Task(
-                id = args.taskId,
+                id = taskId,
                 title = taskTitle,
                 isCompleted = isCompleted
             )
 
             if (isChecked) {
-                taskViewModel.updateTaskStatus(updatedTask)
+                taskViewModel.updateTaskStatus(updatedTask.copy(isCompleted = true))
             }
 
             if (!isChecked) {
-                completedTaskViewModel.updateCompletedTaskStatus(updatedTask.copy(isCompleted = !isChecked))
+                taskViewModel.updateTaskStatusPending(updatedTask.copy(isCompleted = false))
             }
 
             binding.taskDetailsStatus.text = if (isChecked) "Completada" else "No Completada"
         }
+
+        // Acción para eliminar tarea según estado del checkbox
+        binding.deleteButton.setOnClickListener {
+            val taskToDelete = Task(id = taskId, title = taskTitle, isCompleted = isCompleted)
+
+            if (binding.taskDetailsCheckbox.isChecked) {
+                taskViewModel.deleteTaskCompleted(taskToDelete)
+            } else {
+                taskViewModel.deleteTask(taskToDelete)
+            }
+
+            findNavController().popBackStack()
+        }
+
 
         binding.viewCompletedTasksButton.setOnClickListener {
             findNavController().popBackStack()

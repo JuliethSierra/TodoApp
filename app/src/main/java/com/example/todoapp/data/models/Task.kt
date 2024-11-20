@@ -1,7 +1,7 @@
 package com.example.todoapp.data.models
 
 data class Task(
-    val id: Int,
     var title: String,
-    var isCompleted: Boolean = false
+    var isCompleted: Boolean = false,
+    val id: Int = 0
 )

@@ -1,62 +1,34 @@
 package com.example.todoapp.data.repository
 
+import com.example.todoapp.data.local.TaskDao
+import com.example.todoapp.data.mapper.toTask
+import com.example.todoapp.data.mapper.toTaskEntity
 import com.example.todoapp.data.models.Task
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class TaskRepository @Inject constructor() {
-    private val taskList = mutableListOf<Task>()
-    private val completedTasks = mutableListOf<Task>()
-    private var taskIdCounter = 0
+class TaskRepository @Inject constructor(private val taskDao: TaskDao) {
 
-    init {
-        repeat(4) { index ->
-            taskList.add(
-                Task(
-                    id = taskIdCounter++,
-                    title = "Tarea $index",
-                    isCompleted = false
-                )
-            )
-        }
+    suspend fun getAllTasks(): List<Task> {
+        return taskDao.getAllTasks().map { it.toTask() }
     }
 
-    fun getAllTasks(): List<Task> = taskList
-
-    fun addTask(title: String) {
-        val task = Task(id = taskIdCounter++, title)
-        taskList.add(task)
+    suspend fun getCompletedTasks(): List<Task> {
+        return taskDao.getTasksByCompletionStatus().map { it.toTask() }
     }
 
-    fun updateTask(task: Task) {
-        taskList.replaceAll { if (it.id == task.id) task else it }
+    suspend fun addTask(title: String) {
+        val task = Task(title)
+        taskDao.insertTask(task.toTaskEntity())
     }
 
-    fun updateStatusTask(updatedTask: Task) {
-        taskList.find { it.id == updatedTask.id }?.let {
-            it.isCompleted = updatedTask.isCompleted // Actualizar el estado
-        }
+
+    suspend fun deleteTask(taskId: Int) {
+        taskDao.deleteTask(taskId)
     }
 
-    fun completedTask(completedTask: Task){
-        taskList.remove(completedTask)
+    suspend fun updateStatusTask(taskId: Int, isCompleted: Boolean) {
+        taskDao.updateTaskStatus(taskId, isCompleted)
     }
 
-     fun addCompletedTask(task: Task) {
-        completedTasks.add(task)
-    }
-
-    fun addNoCompletedTask(task: Task) {
-        val task = Task(id = task.id, title = task.title, isCompleted = false)
-        taskList.add(task)
-    }
-
-    fun deleteNoCompletedTask(noCompletedTask: Task){
-        completedTasks.remove(noCompletedTask)
-    }
-
-    fun getCompletedListTasks(): List<Task> {
-        return completedTasks
-    }
 }
+

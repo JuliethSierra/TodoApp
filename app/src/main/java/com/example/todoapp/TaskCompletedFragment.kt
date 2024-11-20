@@ -1,7 +1,5 @@
 package com.example.todoapp
 
-import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,24 +9,19 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.todoapp.data.viewmodel.CompletedTaskViewModel
 import com.example.todoapp.data.viewmodel.TaskViewModel
-import com.example.todoapp.databinding.DialogAddTaskBinding
-import com.example.todoapp.databinding.FragmentMainTaskBinding
 import com.example.todoapp.databinding.FragmentTaskCompletedBinding
 import com.example.todoapp.ui.screens.completedtasks.rv.RVCompletedTaskAdapter
-import com.example.todoapp.ui.screens.tasks.rv.RVTaskAdapter
-import com.example.todoapp.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TaskCompletedFragment : Fragment() {
 
-    private val completedTaskViewModel: CompletedTaskViewModel by viewModels()
+    private val taskViewModel: TaskViewModel by viewModels()
     private var _binding: FragmentTaskCompletedBinding? = null
     private val binding get() = _binding!!
-    private lateinit var rvCompletedTaskAdapter: RVCompletedTaskAdapter
+    private lateinit var rvTaskCompletedAdapter: RVCompletedTaskAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,28 +34,31 @@ class TaskCompletedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rvCompletedTaskAdapter = RVCompletedTaskAdapter(
+        rvTaskCompletedAdapter = RVCompletedTaskAdapter(
             onTaskCheckedChange = { task, isChecked ->
-                if (!isChecked) {
-                    completedTaskViewModel.updateCompletedTaskStatus(task.copy(isCompleted = !isChecked))
-                    initUiStateLifecycle()
-                }
+                taskViewModel.updateTaskStatusPending(task.copy(isCompleted = false))
             },
             onTaskSelected = { task ->
-
-                val action = TaskCompletedFragmentDirections.actionTaskCompletedFragmentToTaskDetailsFragment(
-                    taskId = task.id,
-                    taskTitle = task.title,
-                    isCompleted = task.isCompleted
-                )
+                val action =
+                    TaskCompletedFragmentDirections.actionTaskCompletedFragmentToTaskDetailsFragment(
+                        taskId = task.id,
+                        taskTitle = task.title,
+                        isCompleted = task.isCompleted
+                    )
                 findNavController().navigate(action)
+            },
+            onTaskDeleted = { task ->
+                taskViewModel.deleteTaskCompleted(task)
             }
         )
+
         setupRecyclerView()
+
+        loadCompletedTasks()
 
         initUiStateLifecycle()
 
-        binding.viewTasksButton.setOnClickListener{
+        binding.viewTasksButton.setOnClickListener {
             findNavController().navigate(R.id.action_taskCompletedFragment_to_mainTaskFragment)
         }
     }
@@ -70,18 +66,24 @@ class TaskCompletedFragment : Fragment() {
     private fun setupRecyclerView() {
         binding.taskRecyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = rvCompletedTaskAdapter
+            adapter = rvTaskCompletedAdapter
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+    private fun loadCompletedTasks() {
+        lifecycleScope.launch {
+            taskViewModel.loadCompletedTasks()
+        }
+    }
+
     private fun initUiStateLifecycle() {
         lifecycleScope.launch {
-            completedTaskViewModel.uiState.collect { uiState ->
-                uiState.completedTasks?.let { listCompletedTasks ->
-                    rvCompletedTaskAdapter.setCompletedTasks(listCompletedTasks)
+            taskViewModel.uiState.collect { uiState ->
+                uiState.tasks?.let { listTasks ->
+                    rvTaskCompletedAdapter.setCompletedTasks(listTasks)
                 }
-                binding.taskRecyclerView.visibility = if (uiState.isLoading) View.INVISIBLE else View.VISIBLE
+                binding.taskRecyclerView.visibility =
+                    if (uiState.isLoading) View.INVISIBLE else View.VISIBLE
                 binding.pbTasks.visibility = if (uiState.isLoading) View.VISIBLE else View.GONE
             }
         }
